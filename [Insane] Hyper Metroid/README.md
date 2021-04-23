@@ -22,7 +22,7 @@ This challenge uses that the prime is a generalised Mersenne prime. The curve it
 
 We can solve this challenge from the below reference
 
-![Screenshot from Koblitz]()
+![Screenshot from Koblitz](https://github.com/cryptohack/Cyber-Apocalypse-CTF-2021/blob/841628c497b31ccb16947c09137685de2b2ceefe/%5BInsane%5D%20Hyper%20Metroid/Screenshot%202021-03-12%20at%205.57.53%20pm.png)
 
 A full implementation of this challenge is given in `solve.sage`
 
