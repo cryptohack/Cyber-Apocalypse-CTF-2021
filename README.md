@@ -38,3 +38,5 @@ Thanks for playing CHTB!
 - Hyper Metroid (find the order of the Jacobian of a hyperelliptic curve using that p is a generalised Mersenne prime)
 - Tetris 3D: periodic polyalphabetic substitution cipher (with some minor transposition)
 - SpongeBob SquarePants: Battle for Bikini Bottom – Rehydrated: Backdoored sponge function hash collision
+- SpongeBob SquarePants: Battle for Bikini Bottom – Dehydrated: Plankton's Revenge 
+
