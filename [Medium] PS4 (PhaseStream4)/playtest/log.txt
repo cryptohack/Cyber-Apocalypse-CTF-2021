@@ -1,0 +1,21 @@
+CHTB{
+I along 
+I alone 
+CHTB{stream
+CHTB{stream_
+I alone cannot 
+CHTB{stream_cipher
+I alone cannot change
+I alone cannot change 
+CHTB{stream_ciphers_will
+the
+I alone cannot change the
+I alone cannot change the world, but I can cast a stone across the water to create many ripples
+I alone cannot change the world, but I can cast a stone across the water
+CHTB{stream_ciphers_with_reused_keystreams_are_vulnerable_to_known_plaintext
+I alone cannot change the world, but I can cast a stone across the water to create 
+I alone cannot change the world, but I can cast a stone across the water to create many 
+I alone cannot change the world, but I can cast a stone across the water to create man
+I alone cannot change the world, but I can cast a stone across the water to create m
+CHTB{stream_ciphers_with_reused_keystreams_are_vulnerable_to_known_plaintext_attacks}
+I alone cannot change the world, but I can cast a stone across the water to create ma

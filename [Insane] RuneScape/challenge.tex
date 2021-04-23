@@ -1,0 +1,105 @@
+\documentclass{article}
+
+% set font encoding for PDFLaTeX, XeLaTeX, or LuaTeX
+\usepackage{ifxetex,ifluatex}
+\if\ifxetex T\else\ifluatex T\else F\fi\fi T%
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[pdfusetitle]{hyperref}
+
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\Fq}{\ensuremath{\F_q}}
+\newcommand{\K}{\ensuremath{\mathbb{K}}}
+\newcommand{\V}{\ensuremath{\mathbb{V}}}
+\newcommand{\vv}[1]{\ensuremath{\bar{#1}}}
+\newcommand{\kk}[1]{\ensuremath{\mathbf{#1}}}
+
+\title{MMO might actually just stand for massive multivariate output}
+
+\begin{document}
+\setlength{\parindent}{0px}
+
+\section{Introduction}
+
+\emph{We provide here a slightly simplified description of an existing cryptosystem.
+For reasons related to challenge design\footnote{i.e. we don't want you to try and find another implementation or attack right away, but rather follow along what we present here}
+we leave it nameless here.}
+
+~\\
+We have found a description of a cryptographic scheme the aliens left behind after stealing all our RuneScape gold.
+They also left behind a single ciphertext, containing our flag.
+Unfortunately, we couldn't recover the source code, but we're fairly sure it was encrypted with this scheme.
+
+~\\
+Our forensic engineers say they managed to even recover a large part of the private key for this flag, so maybe that can help you out too.
+
+\section{Cryptosystem}
+
+Let $\F$ be a finite field of characteristic 2 and order $q$.
+That is: $\F = \Fq$ with $q = 2^k$ for some $k$.
+
+We define $\K$ to be a degree $n$ extension of $\F$, represented by polynomials from $\F[X]/(P)$ where $P$ is a degree $n$ irreducible polynomial over $\F$.
+Any extension ring, and as such $\K$, can also be seen as an $\F$-vector space $\V = \Fq^n$.
+
+To make this correspondence explicit, we introduce the basis $(\beta_i)_{0 \le i < n}$ for $\V$ as $\beta_i = X^i$.
+This allows us to introduce the $\F$-linear conversion maps \[\phi : \K \to \V : a_0 + a_1 X + \dots + a_{n - 1} X^{n - 1} \mapsto (a_o, a_1, \dots, a_{n - 1})\] and \[\phi^{-1} : \V \to \K : (a_0, a_1, \dots, a_{n - 1}) \mapsto \sum_{i = 0}^{n - 1} a_i \beta_i.\]
+
+As a note on notation: a value $x$ will be denoted with either $\vv{x} \in \V$ or $\kk{x} \in \K$.
+
+The key idea to this cryptosystem is that we want the public key to be a function $f$ that is hard to invert, while the private key contains a decomposition of $f$ into separately invertible parts.
+Knowing this decomposition then allows us to invert the entire function, as \[(f_0 \circ f_1 \circ \dots \circ f_n)^{-1} = f_n^{-1} \circ \dots \circ f_1^{-1} \circ f_o^{-1}.\]
+In this case, we will construct $f$ out of 3 pieces that work over either $\K$ or $\V$, and glue those together by application of $\phi$ and $\phi^{-1}$.
+
+The first and last of our 3 components will be denoted as $L_1$ and $L_2$, respectively.
+These are both $\F$-affine maps working over $\V$.
+That is, we can represent $L_i$ as the pair $(M_i, \vv{k_i}) \in \Fq^{n \times n} \times \Fq^n$ such that $M_i$ is invertible over $\Fq$.
+The map $L_i$ itself will then be \[L_i : \Fq^n \to \Fq^n : \vv{x} \mapsto M_i x + \vv{k_i}.\]
+$L_1$ and $L_2$ are part of the decomposition trapdoor, and should as such be considered private.
+
+In between the application of $L_1$ and $L_2$, we will apply the monomial map $\psi$.
+Here, we work over $\K$, choose the simple function \[\psi : \K \to \K : \kk{u} \mapsto \kk{u}^h\] where we let $h = q^\theta + 1$ be another private variable, subject to $\psi^{-1}$ existing.
+
+Putting it all together, we obtain the public key \[f : \V \to \V = L_2 \circ \phi \circ \psi \circ \phi^{-1} \circ L_1\] and the private key \[(h, M_1, k_1, M_2, k_2).\]
+
+To represent and transmit the public key $f$, we can evaluate it on the symbolic variable $\vv{x} = (x_0, \dots, x_{n - 1})$ as $\vv{y} = f(\vv{x})$ and obtain a set of $n$ equations $y_i = f_i(\vv{x})$ over $\F$.
+To encrypt the plaintext $\vv{x}$, we simply evaluate $\vv{y} = f(\vv{x})$ by way of evaluating each individual $f_i$ in the public key.
+The ciphertext consists simply of $\vv{y}$.
+
+\section{Sample}
+
+As an example of this derivation of the public key, we consider some toy parameters. We set $q = 2^2$, $n = 3$ and $h = 17$. $\alpha$ is an element of $\F = \F_{2^2}$ such that $\alpha^2 = \alpha + 1$. The extension $\K$ is the $n$th degree extension of $\F$, modulo the polynomial $X^3 + \alpha$.
+
+\begin{align*}M_1 &= \begin{bmatrix}1 & 0 & \alpha \\ 0 & 0 & \alpha + 1 \\ \alpha & \alpha & \alpha \end{bmatrix} \quad &k_1 &= (1, \alpha, 1)
+\\
+M_2 &= \begin{bmatrix}1 & \alpha & \alpha + 1 \\ 0 & 1 & \alpha + 1 \\ \alpha & \alpha & \alpha + 1 \end{bmatrix} \quad &k_2 &= (\alpha + 1, 0, \alpha + 1)\end{align*}
+
+Now consider the symbolic variable $\vv{x} = (x_0, x_1, x_2)$, we can compute \[\vv{y}(\vv{x}) = L_2(\phi(\psi(\phi^{-1}(L_1(\vv{x}))))),\] resulting in
+\begin{align*}
+  \vv{y}(x_0,x_1,x_2) &= (y_0,y_1,y_2)\\
+  y_0 &= x_0^2 + \alpha^2 x_0 x_1 + \alpha^2 x_1^2 + \alpha x_0 x_2 + \alpha^2 x_1 x_2 + \alpha^2 x_2^2 + x_0 + \alpha x1 + \alpha\\
+  y_1 &= x_0^2 + \alpha^2 x_0 x_1 + \alpha x_1^2 + \alpha^2 x_0 x_2 + x_1 x_2 + \alpha x_2^2 + \alpha x_0 + \alpha^2 x_1 + \alpha^2\\
+  y_2 &= \alpha x_0^2 + \alpha^2 x_0 x_1 + \alpha^2 x_1^2 + \alpha^2 x_0 x_2 + \alpha x_1 x_2 + \alpha x_0 + x_1 + \alpha^2\end{align*}
+  
+As a sanity check, here are some intermediate values:
+\begin{align*}
+  (L_1(\vv{x}))_0 &= x_0 + \alpha*x_2 + 1 \\
+  \phi(\psi(\phi^{-1}(L_1(\vv{x}))))_1 &= \alpha x_0^2 + \alpha x_1^2 + x_0 x_2 + \alpha^2 x_0
+\end{align*}
+
+\section{Instantiation}
+
+For this challenge, $q = 2^{8}$ and $\F = \Fq$ is represented as the quotient \[\F_2[X]/(X^8 + X^4 + X^3 + X^2 + 1).\]
+$\alpha$ is a primitive element of $\F$ such that $\alpha^8 + \alpha^4 + \alpha^3 + \alpha^2 + 1 = 0$.
+$\K$ is the $60$th degree extension of $\F$ modulo the polynomial provided in \texttt{output.txt}.
+
+To embed a binary message of length $n$ into $\V$, we place a byte in each component.
+A byte $\sum b_i 2^i$ can be represented as $\sum b_i \alpha^i$.
+
+\end{document}
