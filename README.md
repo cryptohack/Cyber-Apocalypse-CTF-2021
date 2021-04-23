@@ -21,7 +21,6 @@ Thanks for playing CHTB!
 ### "Medium": ⭐⭐
 
 - PS4 (PhaseStream 4): re-used stream cipher with crib-dragging
-- SNESSSS: Shamir's secret sharing shards hidden in image (this is more of a forensics chal)
 - Soulcrabber II: Rust RNG initialised with current time
 - RSA Jam: Simple RSA chal where you need to find a "second" private exponent, i.e. by using carmichael lambda
 - Super Metroid: RSA Elliptic Cruve mix, with order of curve and j-invariant as things to learn
