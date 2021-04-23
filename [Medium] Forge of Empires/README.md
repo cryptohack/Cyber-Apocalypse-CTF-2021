@@ -17,7 +17,7 @@ Over thousands of miles, a messenger from the East has arrived with the sacred t
 
 ## Challenge:
 
-![description of solution](https://github.com/cryptohack/chtb/blob/0396fef17f4aeed4f324d78f2a0f63eb5efe12cc/%5BMedium%5D%20Forge%20of%20Empires/Screenshot%202021-04-11%20at%2012.52.01%20pm.png)
+![description of solution](https://github.com/cryptohack/Cyber-Apocalypse-CTF-2021/blob/981b6a5e863810699b129233c5746f2ffa0df712/%5BMedium%5D%20Forge%20of%20Empires/Screenshot%202021-04-11%20at%2012.52.01%20pm.png)
 
 As we do not hash the message, we can hand-pick `m` such that the message is correctly signed. A full implementation is given in `solve.py`
 
